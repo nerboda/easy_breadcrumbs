@@ -1,5 +1,5 @@
-require "easy_breadcrumbs/version"
-require 'easy_breadcrumbs/breadcrumb'
+require_relative "easy_breadcrumbs/version"
+require_relative "easy_breadcrumbs/breadcrumb"
 
 module Sinatra
   module EasyBreadcrumbs
