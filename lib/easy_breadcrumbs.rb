@@ -8,7 +8,7 @@ module Sinatra
       request_path = request.path
 
       # the rest is handled by Breadcrumb class
-      Breadcrumb.new(request_path).html
+      Breadcrumb.new(request_path).to_html
     end
   end
 
