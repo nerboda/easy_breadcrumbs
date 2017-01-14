@@ -9,8 +9,8 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Eliathah Boda"]
   spec.email         = ["nerboda@gmail.com"]
 
-  spec.summary       = %q{Automatically add bootstrap breadcrumbs to Sinatra app.}
-  spec.description   = %q{Provides an `easy_breadcrumbs` view helper for automatically generating boostrap breadcrumbs for your Sinatra Application.}
+  spec.summary       = %q{Automatically add bootstrap breadcrumbs to your Sinatra app.}
+  spec.description   = %q{Provides an `easy_breadcrumbs` view helper for automatically generating bootstrap breadcrumbs for your Sinatra Application.}
   spec.homepage      = ""
   spec.license       = "MIT"
 

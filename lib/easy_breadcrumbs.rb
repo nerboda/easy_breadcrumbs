@@ -4,11 +4,15 @@ require_relative "easy_breadcrumbs/breadcrumb"
 module Sinatra
   module EasyBreadcrumbs
     def easy_breadcrumbs
-      # get path from current Rack::Request object
+      # Path from current Rack::Request object
       request_path = request.path
 
+      # All GET request routes
+      routes = Sinatra::Application.routes["GET"].map { |route| route[0] }
+      
       # the rest is handled by Breadcrumb class
-      Breadcrumb.new(request_path).to_html
+      breadcrumb = Breadcrumb.new(request_path, routes)
+      breadcrumb.to_html
     end
   end
 
