@@ -1,8 +1,6 @@
 # EasyBreadcrumbs
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/easy_breadcrumbs`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+Provides an `easy_breadcrumbs` view helper for automatically generating bootstrap breadcrumbs for your Sinatra Application.
 
 ## Installation
 
@@ -22,7 +20,13 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+Simple add this line to your sinatra application file:
+
+    require "easy_breadcrumbs"
+
+And then use the helper method in your layout or view:
+    
+    <%= easy_breadcrumbs %>
 
 ## Development
 
@@ -32,7 +36,7 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/easy_breadcrumbs.
+Bug reports and pull requests are welcome on GitHub at https://github.com/nerboda/easy_breadcrumbs.
 
 
 ## License
