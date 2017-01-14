@@ -2,6 +2,9 @@
 
 Provides an `easy_breadcrumbs` view helper for automatically generating bootstrap breadcrumbs for your Sinatra Application.
 
+* It's able to properly generate the html for many different types of complex routes (See Below).
+* It only generates breadcrumbs for the routes you've defined, so if you have a route `/categories/10/contacts/5`, but haven't defined an index view route for `/categories`, that item will be left out.
+
 ## Installation
 
 Add this line to your application's Gemfile:
@@ -20,13 +23,71 @@ Or install it yourself as:
 
 ## Usage
 
-Simple add this line to your sinatra application file:
+Simply add this line to your sinatra application file:
 
     require "easy_breadcrumbs"
 
 And then use the helper method in your layout or view:
     
     <%= easy_breadcrumbs %>
+
+## Details
+
+Easy Breadcrumbs is able to handle a variety of complex routes. Here are some examples:
+
+### Simple path to page
+```
+Path: /about
+Breadcrumb: Home > About
+```
+
+### Path to resource index page
+```
+Path: /contacts
+Breadcrumb: Home > Contacts
+```
+
+###Path to specific resource
+```
+Path: /contacts/28
+Breadcrumb: Home > Contacts > Contact
+```
+
+### Path to resource new view
+```
+Path: /contacts/new
+Breadcrumb: Home > Contacts > New Contact
+```
+
+### Path to edit specific resource
+```
+Path: /contacts/28/edit
+Breadcrumb: Home > Contacts > Contact > Edit Contact
+```
+
+### Path to nested resource index page
+```
+Path: /categories/5/contacts
+Breadcrumb: Home > Categories > Category > Contacts
+```
+
+### Path to specific nested resource
+```
+Path: /categories/5/contacts/10
+Breadcrumb: Home > Categories > Category > Contacts > Contact
+```
+
+### Path to nested resource new view
+```
+Path: /categories/5/contacts/new
+Breadcrumb: Home > Categories > Category > Contacts > New Contact
+```
+
+### Path to edit specific nested resource
+```
+Path: /categories/5/contacts/10/edit
+Breadcrumb: Home > Categories > Category > Contacts > Contact > Edit
+```
 
 ## Development
 
