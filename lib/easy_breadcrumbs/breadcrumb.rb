@@ -1,45 +1,53 @@
-require_relative "pathset"
+require 'erubis'
+require 'active_support/inflector/methods'
 
 module EasyBreadcrumbs
   class Breadcrumb
-    def initialize(request_path, routes)
-      @paths = PathSet.new(request_path, routes).to_a
+    include ActiveSupport::Inflector
+
+    Link = Struct.new(:full_path, :anchor_text)
+
+    def initialize(request_path, route_matchers)
+      @routes = route_matchers
+      @directories = request_path.scan(/\/[^\/]+/)
+      @links = []
+      
+      build_links!
     end
 
     def to_html
-      list_items = format_list_items(@paths)
-      <<~HTML.chomp
-        <ol class=\"breadcrumb\">
-        <li class=\"breadcrumb-item\"><a href=\"/\">Home</a></li>
-        #{list_items}
-        </ol>
-      HTML
+      path = File.expand_path('../../assets/breadcrumbs.eruby', __FILE__)
+      template = File.read(path)
+      
+      eruby = Erubis::Eruby.new(template)
+      eruby.result(binding)
     end
 
     private
 
-    def format_list_items(paths)
-      list_items = paths.map do |path|
-        if path.full_path == paths.last.full_path
-          active_list_item(path.anchor_text)
-        else
-          link_list_item(path.full_path, path.anchor_text)
+    def build_links!
+      @directories.each_with_index do |directory, idx|
+        full_path = @directories[0..idx].join
+        
+        if is_defined?(full_path)
+          anchor_text = if directory =~ /\d/
+                          previous_directory = @directories[idx - 1]
+                          text_for_anchor = to_anchor_text(previous_directory)
+                          singularize(text_for_anchor)
+                        else
+                          to_anchor_text(directory)
+                        end
+          @links << Link.new(full_path, anchor_text)
         end
       end
-
-      list_items.join("\n")
     end
 
-    def format_anchor_text(directory)
+    def to_anchor_text(directory)
       directory.delete("/").capitalize
     end
 
-    def link_list_item(link, anchor_text)
-      "<li class=\"breadcrumb-item\"><a href=\"#{link}\">#{anchor_text}</a></li>"
-    end
-
-    def active_list_item(anchor_text)
-      "<li class=\"breadcrumb-item active\">#{anchor_text}</li>"
+    def is_defined?(path)
+      @routes.any? { |route| path.match(route) }
     end
   end
 end
