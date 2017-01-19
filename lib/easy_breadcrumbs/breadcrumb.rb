@@ -6,8 +6,6 @@ module EasyBreadcrumbs
   class Breadcrumb
     include ActiveSupport::Inflector
 
-    Link = Struct.new(:full_path, :anchor_text)
-
     def initialize(request_path, route_matchers)
       @routes = route_matchers
       @directories = request_path.scan(/\/[^\/]+/)
@@ -25,6 +23,8 @@ module EasyBreadcrumbs
     end
 
     private
+
+    Link = Struct.new(:path, :text)
 
     def build_links!
       @directories.each_with_index do |directory, idx|
