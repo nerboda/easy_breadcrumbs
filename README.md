@@ -23,9 +23,19 @@ Or install it yourself as:
 
 ## Usage
 
-Simply add this line to your sinatra application file:
+If you're building a classic style Sinatra app, simply add this line to your sinatra application file:
 
     require "easy_breadcrumbs"
+
+ATTENTION: If you're building a modular style Sinatra app, you'll also need to explicitly register the module within your application.
+
+    class HelloApp < Sinatra::Base
+      helpers Sinatra::EasyBreadcrumbs
+
+      get "/hello" do
+        h "1 < 2"
+      end
+    end
 
 And then use the helper method in your layout or view:
     
