@@ -23,11 +23,13 @@ Or install it yourself as:
 
 ## Usage
 
+### Step 1
+
 If you're building a classic style Sinatra app, simply add this line to your sinatra application file:
 
     require "easy_breadcrumbs"
 
-ATTENTION: If you're building a modular style Sinatra app, you'll also need to explicitly register the module within your application.
+If you're building a modular style Sinatra app, you'll also need to explicitly register the module within your application.
 
     class HelloApp < Sinatra::Base
       helpers Sinatra::EasyBreadcrumbs
@@ -37,9 +39,13 @@ ATTENTION: If you're building a modular style Sinatra app, you'll also need to e
       end
     end
 
+### Step 2
+
 And then use the helper method in your layout or view:
     
     <%= easy_breadcrumbs %>
+
+### Step 3
 
 And last but not least, make sure you have bootstrap installed. You can install bootstrap's css by adding this line to your applications layout template.
 
