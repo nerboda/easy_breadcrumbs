@@ -13,7 +13,7 @@ module Sinatra
       request_path = request.path
 
       # All GET request routes
-      route_matchers = Sinatra::Application.routes['GET'].map { |route| route[0] }
+      route_matchers = self.class.routes['GET'].map { |route| route[0] }
 
       # The rest is handled by Breadcrumb class
       breadcrumb = Breadcrumb.new(request_path, route_matchers)
