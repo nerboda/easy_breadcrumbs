@@ -8,7 +8,7 @@ module EasyBreadcrumbs
 
     def initialize(request_path, route_matchers)
       @routes = route_matchers
-      @directories = request_path.scan(/\/[^\/]+/)
+      @directories = request_path.scan(%r{\/[^\/]+})
       @links = []
 
       build_links!
@@ -27,28 +27,32 @@ module EasyBreadcrumbs
     Link = Struct.new(:path, :text)
 
     def build_links!
-      @directories.each_with_index do |directory, idx|
-        full_path = @directories[0..idx].join
+      @directories.each_with_index do |directory, index|
+        full_path = @directories[0..index].join
 
-        next unless defined_route?(full_path)
-
-        anchor_text = if directory =~ /\d/
-                        previous_directory = @directories[idx - 1]
-                        text_for_anchor = to_anchor_text(previous_directory)
-                        singularize(text_for_anchor)
-                      else
-                        to_anchor_text(directory)
-                      end
-        @links << Link.new(full_path, anchor_text)
+        if defined_route?(full_path)
+          anchor_text = to_anchor_text(directory, index)
+          @links << Link.new(full_path, anchor_text)
+        end
       end
     end
 
-    def to_anchor_text(directory)
+    def to_anchor_text(directory, index)
+      if directory =~ /\d/
+        previous_directory = @directories[index - 1]
+        text_for_anchor = clean_and_capitalize(previous_directory)
+        singularize(text_for_anchor)
+      else
+        clean_and_capitalize(directory)
+      end
+    end
+
+    def clean_and_capitalize(directory)
       directory.delete('/').capitalize
     end
 
     def defined_route?(path)
-      @routes.any? { |route| path.match(route) }
+      @routes.any? { |route| path =~ route }
     end
   end
 end
