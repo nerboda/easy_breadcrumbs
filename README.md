@@ -106,8 +106,22 @@ Breadcrumb: Home > Categories > Category > Contacts > New Contact
 ### Path to edit specific nested resource
 ```
 Path: /categories/5/contacts/10/edit
-Breadcrumb: Home > Categories > Category > Contacts > Contact > Edit
+Breadcrumb: Home > Categories > Category > Contacts > Contact > Edit Contact
 ```
+
+## Road Map
+
+* Change formatting of Home breadcrumb so that it's active and unlinked if the current page is home.
+* Change anchor text for Edit/New views to read like "New Contact" instead of just "New"
+* Add integration tests that simulate a user navigating to a specific page within a sinatra app and verify the proper html exists within the html response (for both Classic and Modular style apps).
+
+That should be enough to bump the version to 1.0.
+
+Here are a few more things that might be worth adding down the line:
+* Integration for Rails
+* A simple means of configuration for things like:
+  * Turning on and off specific routes
+  * Setting breadcrumb styles (maybe provide an option for a different framework like Foundation, or just provide a few different styling presets)
 
 ## Contributing
 
