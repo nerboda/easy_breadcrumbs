@@ -82,7 +82,7 @@ describe EasyBreadcrumbs do
           <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="/">Home</a></li>
             <li class="breadcrumb-item"><a href="/contacts">Contacts</a></li>
-            <li class="breadcrumb-item active">New</li>
+            <li class="breadcrumb-item active">New Contact</li>
           </ol>
         HTML
         expect(breadcrumb_html).to eq(expected_html)
@@ -96,7 +96,7 @@ describe EasyBreadcrumbs do
             <li class="breadcrumb-item"><a href="/">Home</a></li>
             <li class="breadcrumb-item"><a href="/contacts">Contacts</a></li>
             <li class="breadcrumb-item"><a href="/contacts/28">Contact</a></li>
-            <li class="breadcrumb-item active">Edit</li>
+            <li class="breadcrumb-item active">Edit Contact</li>
           </ol>
         HTML
         expect(breadcrumb_html).to eq(expected_html)
@@ -140,7 +140,7 @@ describe EasyBreadcrumbs do
             <li class="breadcrumb-item"><a href="/categories">Categories</a></li>
             <li class="breadcrumb-item"><a href="/categories/5">Category</a></li>
             <li class="breadcrumb-item"><a href="/categories/5/contacts">Contacts</a></li>
-            <li class="breadcrumb-item active">New</li>
+            <li class="breadcrumb-item active">New Contact</li>
           </ol>
         HTML
         expect(breadcrumb_html).to eq(expected_html)
@@ -156,7 +156,7 @@ describe EasyBreadcrumbs do
             <li class="breadcrumb-item"><a href="/categories/5">Category</a></li>
             <li class="breadcrumb-item"><a href="/categories/5/contacts">Contacts</a></li>
             <li class="breadcrumb-item"><a href="/categories/5/contacts/10">Contact</a></li>
-            <li class="breadcrumb-item active">Edit</li>
+            <li class="breadcrumb-item active">Edit Contact</li>
           </ol>
         HTML
         expect(breadcrumb_html).to eq(expected_html)
@@ -173,7 +173,7 @@ describe EasyBreadcrumbs do
             <li class="breadcrumb-item"><a href="/">Home</a></li>
             <li class="breadcrumb-item"><a href="/categories/5">Category</a></li>
             <li class="breadcrumb-item"><a href="/categories/5/contacts/10">Contact</a></li>
-            <li class="breadcrumb-item active">Edit</li>
+            <li class="breadcrumb-item active">Edit Contact</li>
           </ol>
         HTML
         expect(breadcrumb_html).to eq(expected_html)

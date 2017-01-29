@@ -39,12 +39,29 @@ module EasyBreadcrumbs
 
     def to_anchor_text(directory, index)
       if directory =~ /\d/
-        previous_directory = @directories[index - 1]
-        text_for_anchor = clean_and_capitalize(previous_directory)
-        singularize(text_for_anchor)
+        format_for_specific_resource(index)
+      elsif %w(/edit /new).include?(directory)
+        format_with_view_prefix(directory, index)
       else
         clean_and_capitalize(directory)
       end
+    end
+
+    def format_for_specific_resource(index)
+      previous_directory = @directories[index - 1]
+      text_for_anchor = clean_and_capitalize(previous_directory)
+      singularize(text_for_anchor)
+    end
+
+    def format_with_view_prefix(directory, index)
+      previous_index = directory == "/edit" ? index - 2 : index - 1
+      previous_directory = @directories[previous_index]
+      
+      view_prefix = clean_and_capitalize(directory)
+      rest_of_anchor = clean_and_capitalize(previous_directory)
+      singularized = singularize(rest_of_anchor)
+      
+      "#{view_prefix} #{singularized}"
     end
 
     def clean_and_capitalize(directory)
