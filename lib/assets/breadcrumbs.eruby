@@ -1,5 +1,9 @@
 <ol class="breadcrumb">
+  <% if @links.empty? %>
+  <li class="breadcrumb-item active">Home</li>
+  <% else %>
   <li class="breadcrumb-item"><a href="/">Home</a></li>
+  <% end %>
 <% @links.each do |link| %>
   <% if link.path == @links.last.path %>
   <li class="breadcrumb-item active"><%= link.text %></li>

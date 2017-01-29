@@ -111,7 +111,6 @@ Breadcrumb: Home > Categories > Category > Contacts > Contact > Edit Contact
 
 ## Road Map
 
-* Change formatting of Home breadcrumb so that it's active and unlinked if the current page is home.
 * Change anchor text for Edit/New views to read like "New Contact" instead of just "New"
 * Add integration tests that simulate a user navigating to a specific page within a sinatra app and verify the proper html exists within the html response (for both Classic and Modular style apps).
 

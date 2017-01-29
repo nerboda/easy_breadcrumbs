@@ -27,6 +27,17 @@ describe EasyBreadcrumbs do
     end
 
     describe "#to_html" do
+      it "has single unlinked breadcrumb if page is home" do
+        request_path = "/"
+        breadcrumb_html = Breadcrumb.new(request_path, @routes).to_html
+        expected_html = <<~HTML.chomp
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item active">Home</li>
+          </ol>
+        HTML
+        expect(breadcrumb_html).to eq(expected_html)
+      end
+
       it "returns proper html for simple path" do
         request_path = "/about"
         breadcrumb_html = Breadcrumb.new(request_path, @routes).to_html
