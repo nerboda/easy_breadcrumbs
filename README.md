@@ -111,7 +111,7 @@ Breadcrumb: Home > Categories > Category > Contacts > Contact > Edit Contact
 
 ## Road Map
 
-* Change anchor text for Edit/New views to read like "New Contact" instead of just "New"
+* Add configuration for showing individual resource name/title as breadcrumb (e.g. "Ada Lovelace") anchor text rather than resource type name (e.g. "Contact")
 * Add integration tests that simulate a user navigating to a specific page within a sinatra app and verify the proper html exists within the html response (for both Classic and Modular style apps).
 
 That should be enough to bump the version to 1.0.
