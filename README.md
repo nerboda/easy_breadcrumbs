@@ -112,11 +112,6 @@ Breadcrumb: Home > Categories > Category > Contacts > Contact > Edit Contact
 ## Road Map
 
 * Add configuration for showing individual resource name/title as breadcrumb (e.g. "Ada Lovelace") anchor text rather than resource type name (e.g. "Contact")
-* Add integration tests that simulate a user navigating to a specific page within a sinatra app and verify the proper html exists within the html response (for both Classic and Modular style apps).
-
-That should be enough to bump the version to 1.0.
-
-Here are a few more things that might be worth adding down the line:
 * Integration for Rails
 * A simple means of configuration for things like:
   * Turning on and off specific routes
