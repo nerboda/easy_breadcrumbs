@@ -6,7 +6,8 @@ module EasyBreadcrumbs
   class Breadcrumb
     include ActiveSupport::Inflector
 
-    def initialize(request_path, route_matchers)
+    def initialize(request_path, route_matchers, options = {})
+      @configuration = options
       @routes = route_matchers
       @directories = request_path.scan(%r{\/[^\/]+})
       @links = []
