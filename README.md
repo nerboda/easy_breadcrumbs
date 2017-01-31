@@ -111,13 +111,14 @@ Breadcrumb: Home > Categories > Category > Contacts > Contact > Edit Contact
 
 ## Road Map
 
-* Refactor
+* Refactor and cleanup
   * Change `Breadcrumb` class to `Breadcrumbs`. This class will be responsible for the logic of which type of format to use for each breadcrumb
   * Create new `Breadcrumb` class. This class will be responsible for the implementation details of formatting each type of breadcrumb.
-* Integration for Rails
-* A simple means of configuration for things like:
-  * Turning on and off specific routes
-  * Setting breadcrumb styles (maybe provide an option for a different framework like Foundation, or just provide a few different styling presets)
+  * Add version restictions for dependencies in gemspec
+* More robust spec suite
+  * Explore more edge cases for both unit and integration tests
+  * Eliminate repetition in specs
+  * Other developments gems that would help with this?
 
 ## Contributing
 
