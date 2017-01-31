@@ -111,7 +111,9 @@ Breadcrumb: Home > Categories > Category > Contacts > Contact > Edit Contact
 
 ## Road Map
 
-* Add configuration for showing individual resource name/title as breadcrumb (e.g. "Ada Lovelace") anchor text rather than resource type name (e.g. "Contact")
+* Refactor
+  * Change `Breadcrumb` class to `Breadcrumbs`. This class will be responsible for the logic of which type of format to use for each breadcrumb
+  * Create new `Breadcrumb` class. This class will be responsible for the implementation details of formatting each type of breadcrumb.
 * Integration for Rails
 * A simple means of configuration for things like:
   * Turning on and off specific routes
