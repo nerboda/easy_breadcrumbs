@@ -4,6 +4,7 @@ Provides an `easy_breadcrumbs` view helper for automatically generating bootstra
 
 * It's able to properly generate the html for many different types of complex routes (See Below).
 * It only generates breadcrumbs for the routes you've defined, so if you have a route `/categories/10/contacts/5`, but haven't defined an index view route for `/categories`, that item will be left out.
+* It can automatically detect certain name attributes for specific resources.
 
 ## Installation
 
@@ -53,7 +54,26 @@ And last but not least, make sure you have bootstrap installed. You can install 
 
 ## Details
 
-Easy Breadcrumbs is able to handle a variety of complex routes. Here are some examples:
+**NEW: Auto Name Detection**
+
+Easy Breadcrumbs can now detect names for specific resources.
+```
+Path: /contacts/10
+Old Breadcrumb Format: Home > Contacts > Contact
+New Breadcrumb Format: Home > Contacts > Ada Lovelace
+```
+
+At the moment this only works around a strict set of parameters:
+  * There is an instance variable for the current route that matches the directory name
+    * So for a route of "/contacts/10" there would need to be a `@contact` variable
+  * That object is a hash
+  * That hash contains one of the following keys: `:name`, `:title`, `:subject`
+
+Otherwise it will use the previous default formatting. I'm currently working on making this much more flexible and also allowing for custom configuration.
+
+**Easy Breadcrumbs is able to handle a variety of complex routes.**
+
+Here are some examples:
 
 ### Simple path to page
 ```
@@ -114,11 +134,15 @@ Breadcrumb: Home > Categories > Category > Contacts > Contact > Edit Contact
 * Refactor and cleanup
   * Change `Breadcrumb` class to `Breadcrumbs`. This class will be responsible for the logic of which type of format to use for each breadcrumb
   * Create new `Breadcrumb` class. This class will be responsible for the implementation details of formatting each type of breadcrumb.
-  * Add version restictions for dependencies in gemspec
+  * Add version restrictions for dependencies in gemspec
+* Improve Auto Name Detection
+  * It should also be able to handle if the resources are custom objects and their attributes are accessed through instance methods like `Object#name`.
+* Allow for custom configuration of name attributes for resources
+  * Should be able to do something like `set :easy_breadcrumbs, user: :name, post: :title`
 * More robust spec suite
   * Explore more edge cases for both unit and integration tests
   * Eliminate repetition in specs
-  * Other developments gems that would help with this?
+  * Other development gems that would help with this?
 
 ## Contributing
 
