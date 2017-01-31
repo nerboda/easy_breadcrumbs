@@ -6,10 +6,13 @@ module EasyBreadcrumbs
   class Breadcrumb
     include ActiveSupport::Inflector
 
-    def initialize(request_path, route_matchers, options = {})
-      @configuration = options
-      @routes = route_matchers
-      @directories = request_path.scan(%r{\/[^\/]+})
+    def initialize(settings)
+      @routes = settings.fetch(:route_matchers)
+      @view_variables = settings.fetch(:view_variables)
+
+      path = settings.fetch(:request_path)
+      @directories = path.scan(%r{\/[^\/]+})
+
       @links = []
 
       build_links!
@@ -41,7 +44,7 @@ module EasyBreadcrumbs
     def to_anchor_text(directory, index)
       if directory =~ /\d/
         format_for_specific_resource(index)
-      elsif %w(/edit /new).include?(directory)
+      elsif %w[/edit /new].include?(directory)
         format_with_view_prefix(directory, index)
       else
         clean_and_capitalize(directory)
@@ -50,18 +53,38 @@ module EasyBreadcrumbs
 
     def format_for_specific_resource(index)
       previous_directory = @directories[index - 1]
-      text_for_anchor = clean_and_capitalize(previous_directory)
-      singularize(text_for_anchor)
+      cleaned = previous_directory.delete('/')
+      resource_name = singularize(cleaned)
+
+      name_attribute_value = nil
+
+      if variable_set?(resource_name)
+        resource = find_variable(resource_name)
+        resource_value = resource[:value]
+        name_attribute_value = fetch_name_attribute_value(resource_value)
+      end
+
+      name_attribute_value || resource_name.capitalize
+    end
+
+    def fetch_name_attribute_value(resource_value)
+      common_name_attributes = %i[name title subject]
+
+      name_attribute = resource_value.keys.find do |key|
+        common_name_attributes.include?(key)
+      end
+
+      resource_value[name_attribute] if name_attribute
     end
 
     def format_with_view_prefix(directory, index)
-      previous_index = directory == "/edit" ? index - 2 : index - 1
+      previous_index = directory == '/edit' ? index - 2 : index - 1
       previous_directory = @directories[previous_index]
-      
+
       view_prefix = clean_and_capitalize(directory)
       rest_of_anchor = clean_and_capitalize(previous_directory)
       singularized = singularize(rest_of_anchor)
-      
+
       "#{view_prefix} #{singularized}"
     end
 
@@ -71,6 +94,14 @@ module EasyBreadcrumbs
 
     def defined_route?(path)
       @routes.any? { |route| path =~ route }
+    end
+
+    def variable_set?(resource_name)
+      @view_variables.any? { |var| var[:name] == resource_name.to_sym }
+    end
+
+    def find_variable(resource_name)
+      @view_variables.find { |var| var[:name] == resource_name.to_sym }
     end
   end
 end
