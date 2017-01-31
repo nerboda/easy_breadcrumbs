@@ -9,15 +9,52 @@ module Sinatra
     Breadcrumb = ::EasyBreadcrumbs::Breadcrumb
 
     def easy_breadcrumbs
-      # Path from current Rack::Request object
+      breadcrumb = Breadcrumb.new(config)
+      breadcrumb.to_html
+    end
+
+    private
+
+    EXCLUDED_VARS = [:@default_layout,
+                     :@preferred_extension,
+                     :@app,
+                     :@template_cache,
+                     :@template_cache,
+                     :@env,
+                     :@request,
+                     :@response,
+                     :@params].freeze
+
+    def config
+      # The name of the current Sinatra Application
+      app = self.class
+
+      # The Rack::Request object
       request_path = request.path
 
-      # All GET request routes
-      route_matchers = self.class.routes['GET'].map { |route| route[0] }
+      # All defined GET request routes
+      route_matchers = app.routes['GET'].map { |route| route[0] }
 
-      # The rest is handled by Breadcrumb class
-      breadcrumb = Breadcrumb.new(request_path, route_matchers)
-      breadcrumb.to_html
+      { request_path: request_path,
+        route_matchers: route_matchers,
+        view_variables: view_variables }
+    end
+
+    def view_variables
+      instance_variables
+        .select { |var| !excluded_var?(var) }
+        .map { |var| fetch_ivar(var) }
+    end
+
+    def fetch_ivar(var)
+      name = var.to_s.delete('@').to_sym
+      value = instance_eval(var.to_s)
+
+      { name: name, value: value }
+    end
+
+    def excluded_var?(var)
+      EXCLUDED_VARS.include?(var)
     end
   end
 
