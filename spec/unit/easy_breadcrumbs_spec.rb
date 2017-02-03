@@ -5,11 +5,11 @@ describe EasyBreadcrumbs do
     expect(EasyBreadcrumbs::VERSION).not_to be nil
   end
 
-  Breadcrumb = EasyBreadcrumbs::Breadcrumb
+  Breadcrumbs = EasyBreadcrumbs::Breadcrumbs
 
-  describe Breadcrumb do
+  describe Breadcrumbs do
     it "requires an `options` argument on instantiation" do
-      expect { Breadcrumb.new }.to raise_error(ArgumentError)
+      expect { Breadcrumbs.new }.to raise_error(ArgumentError)
     end
 
     def configure(path, routes = nil, view_variables = [])
@@ -32,7 +32,7 @@ describe EasyBreadcrumbs do
     describe "#to_html" do
       it "has single unlinked breadcrumb if page is home" do
         config = configure("/")
-        breadcrumb_html = Breadcrumb.new(config).to_html
+        breadcrumb_html = Breadcrumbs.new(config).to_html
         expected_html = <<~HTML.chomp
           <ol class="breadcrumb">
             <li class="breadcrumb-item active">Home</li>
@@ -43,7 +43,7 @@ describe EasyBreadcrumbs do
 
       it "returns proper html for simple path" do
         config = configure("/about")
-        breadcrumb_html = Breadcrumb.new(config).to_html
+        breadcrumb_html = Breadcrumbs.new(config).to_html
         expected_html = <<~HTML.chomp
           <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="/">Home</a></li>
@@ -55,7 +55,7 @@ describe EasyBreadcrumbs do
 
       it "returns proper html for path to resource index page" do
         config = configure("/contacts")
-        breadcrumb_html = Breadcrumb.new(config).to_html
+        breadcrumb_html = Breadcrumbs.new(config).to_html
         expected_html = <<~HTML.chomp
           <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="/">Home</a></li>
@@ -67,7 +67,7 @@ describe EasyBreadcrumbs do
 
       it "returns proper html for path to specific resource" do
         config = configure("/contacts/28")
-        breadcrumb_html = Breadcrumb.new(config).to_html
+        breadcrumb_html = Breadcrumbs.new(config).to_html
         expected_html = <<~HTML.chomp
           <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="/">Home</a></li>
@@ -80,7 +80,7 @@ describe EasyBreadcrumbs do
 
       it "returns proper html for path to resource new view" do
         config = configure("/contacts/new")
-        breadcrumb_html = Breadcrumb.new(config).to_html
+        breadcrumb_html = Breadcrumbs.new(config).to_html
         expected_html = <<~HTML.chomp
           <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="/">Home</a></li>
@@ -93,7 +93,7 @@ describe EasyBreadcrumbs do
 
       it "returns proper html for path to edit specific resource" do
         config = configure("/contacts/28/edit")
-        breadcrumb_html = Breadcrumb.new(config).to_html
+        breadcrumb_html = Breadcrumbs.new(config).to_html
         expected_html = <<~HTML.chomp
           <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="/">Home</a></li>
@@ -107,7 +107,7 @@ describe EasyBreadcrumbs do
 
       it "returns proper html for path to nested resource index page" do
         config = configure("/categories/5/contacts")
-        breadcrumb_html = Breadcrumb.new(config).to_html
+        breadcrumb_html = Breadcrumbs.new(config).to_html
         expected_html = <<~HTML.chomp
           <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="/">Home</a></li>
@@ -121,7 +121,7 @@ describe EasyBreadcrumbs do
 
       it "returns proper html for path to specific nested resource" do
         config = configure("/categories/5/contacts/10")
-        breadcrumb_html = Breadcrumb.new(config).to_html
+        breadcrumb_html = Breadcrumbs.new(config).to_html
         expected_html = <<~HTML.chomp
           <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="/">Home</a></li>
@@ -136,7 +136,7 @@ describe EasyBreadcrumbs do
 
       it "returns proper html for path to nested resource new view" do
         config = configure("/categories/5/contacts/new")
-        breadcrumb_html = Breadcrumb.new(config).to_html
+        breadcrumb_html = Breadcrumbs.new(config).to_html
         expected_html = <<~HTML.chomp
           <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="/">Home</a></li>
@@ -151,7 +151,7 @@ describe EasyBreadcrumbs do
 
       it "returns proper html for path to edit specific nested resource" do
         config = configure("/categories/5/contacts/10/edit")
-        breadcrumb_html = Breadcrumb.new(config).to_html
+        breadcrumb_html = Breadcrumbs.new(config).to_html
         expected_html = <<~HTML.chomp
           <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="/">Home</a></li>
@@ -171,7 +171,7 @@ describe EasyBreadcrumbs do
                    /\A\/categories\/([^\/?#]+)\/contacts\/([^\/?#]+)\/edit\z/ ]
         view_variables = [{:name => :contact, :value => {:name=>"Eli"}}]
         config = configure("/categories/5/contacts/10/edit", routes, view_variables)                   
-        breadcrumb_html = Breadcrumb.new(config).to_html
+        breadcrumb_html = Breadcrumbs.new(config).to_html
         expected_html = <<~HTML.chomp
           <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="/">Home</a></li>

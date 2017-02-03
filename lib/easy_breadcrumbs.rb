@@ -1,15 +1,15 @@
 require 'sinatra/base'
 require 'easy_breadcrumbs/version'
-require 'easy_breadcrumbs/breadcrumb'
+require 'easy_breadcrumbs/breadcrumbs'
 
 module Sinatra
   include ::EasyBreadcrumbs
 
   module EasyBreadcrumbs
-    Breadcrumb = ::EasyBreadcrumbs::Breadcrumb
+    Breadcrumbs = ::EasyBreadcrumbs::Breadcrumbs
 
     def easy_breadcrumbs
-      breadcrumb = Breadcrumb.new(config)
+      breadcrumb = Breadcrumbs.new(config)
       breadcrumb.to_html
     end
 
@@ -42,19 +42,19 @@ module Sinatra
 
     def view_variables
       instance_variables
-        .select { |var| !excluded_var?(var) }
-        .map { |var| fetch_ivar(var) }
+        .select { |var| additional_var?(var) }
+        .map { |var| fetch_ivar_value(var) }
     end
 
-    def fetch_ivar(var)
+    def fetch_ivar_value(var)
       name = var.to_s.delete('@').to_sym
       value = instance_eval(var.to_s)
 
       { name: name, value: value }
     end
 
-    def excluded_var?(var)
-      EXCLUDED_VARS.include?(var)
+    def additional_var?(var)
+      !EXCLUDED_VARS.include?(var)
     end
   end
 

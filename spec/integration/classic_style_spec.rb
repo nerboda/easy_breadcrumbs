@@ -6,7 +6,9 @@ get "/" do
 end
 
 get "/categories/:id" do
-  @category = { name: "Acquaintances" }
+  category = Struct.new(:name).new("Acquaintances")
+
+  @category = category
   easy_breadcrumbs
 end
 

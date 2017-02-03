@@ -3,19 +3,18 @@ require 'active_support/inflector/methods'
 
 module EasyBreadcrumbs
   # Breadcrumb class. Converts a URL path into Bootstrap breadcrumbs
-  class Breadcrumb
+  class Breadcrumbs
     include ActiveSupport::Inflector
 
     def initialize(settings)
+      path = settings.fetch(:request_path)
+
+      @directories = path.scan(%r{\/[^\/]+})
       @routes = settings.fetch(:route_matchers)
       @view_variables = settings.fetch(:view_variables)
-
-      path = settings.fetch(:request_path)
-      @directories = path.scan(%r{\/[^\/]+})
-
       @links = []
 
-      build_links!
+      build_breadcrumbs!
     end
 
     def to_html
@@ -28,15 +27,15 @@ module EasyBreadcrumbs
 
     private
 
-    Link = Struct.new(:path, :text)
+    Breadcrumb = Struct.new(:path, :text)
 
-    def build_links!
+    def build_breadcrumbs!
       @directories.each_with_index do |directory, index|
         full_path = @directories[0..index].join
 
         if defined_route?(full_path)
           anchor_text = to_anchor_text(directory, index)
-          @links << Link.new(full_path, anchor_text)
+          @links << Breadcrumb.new(full_path, anchor_text)
         end
       end
     end
@@ -70,8 +69,14 @@ module EasyBreadcrumbs
     def fetch_name_attribute_value(resource_value)
       common_name_attributes = %i[name title subject]
 
-      name_attribute = resource_value.keys.find do |key|
-        common_name_attributes.include?(key)
+      name_attribute = common_name_attributes.find do |method|
+        resource_value.respond_to?(:method)
+      end
+
+      return resource_value[name_attribute] if name_attribute
+
+      name_attribute = common_name_attributes.find do |key|
+        resource_value[key]
       end
 
       resource_value[name_attribute] if name_attribute
