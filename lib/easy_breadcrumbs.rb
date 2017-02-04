@@ -1,29 +1,25 @@
 require 'sinatra/base'
 require 'easy_breadcrumbs/version'
-require 'easy_breadcrumbs/breadcrumb'
+require 'easy_breadcrumbs/breadcrumbs'
 
 module Sinatra
   include ::EasyBreadcrumbs
 
   module EasyBreadcrumbs
-    Breadcrumb = ::EasyBreadcrumbs::Breadcrumb
+    Breadcrumbs = ::EasyBreadcrumbs::Breadcrumbs
 
     def easy_breadcrumbs
-      breadcrumb = Breadcrumb.new(config)
+      breadcrumb = Breadcrumbs.new(config)
       breadcrumb.to_html
     end
 
     private
 
-    EXCLUDED_VARS = [:@default_layout,
-                     :@preferred_extension,
-                     :@app,
-                     :@template_cache,
-                     :@template_cache,
-                     :@env,
-                     :@request,
-                     :@response,
-                     :@params].freeze
+    EXCLUDED_VARS = [:@default_layout, :@preferred_extension,
+                     :@app, :@template_cache, :@template_cache,
+                     :@env, :@request, :@response, :@params]
+
+    Configuration = Struct.new(:request_path, :route_matchers, :view_variables)
 
     def config
       # The name of the current Sinatra Application
@@ -35,26 +31,27 @@ module Sinatra
       # All defined GET request routes
       route_matchers = app.routes['GET'].map { |route| route[0] }
 
-      { request_path: request_path,
-        route_matchers: route_matchers,
-        view_variables: view_variables }
+      Configuration.new(request_path, route_matchers, view_variables)
     end
 
+    # All user defined instance variables for current request.
     def view_variables
       instance_variables
-        .select { |var| !excluded_var?(var) }
-        .map { |var| fetch_ivar(var) }
+        .select { |var| additional_var?(var) }
+        .map { |var| fetch_ivar_value(var) }
     end
 
-    def fetch_ivar(var)
+    # Walk through all instance variables and fetch value.
+    def fetch_ivar_value(var)
       name = var.to_s.delete('@').to_sym
       value = instance_eval(var.to_s)
 
       { name: name, value: value }
     end
 
-    def excluded_var?(var)
-      EXCLUDED_VARS.include?(var)
+    # Ignore pre-existing Sinatra instance variables.
+    def additional_var?(var)
+      !EXCLUDED_VARS.include?(var)
     end
   end
 
