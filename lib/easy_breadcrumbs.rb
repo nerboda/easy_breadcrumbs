@@ -41,7 +41,6 @@ module Sinatra
         .map { |var| fetch_ivar_value(var) }
     end
 
-    # Walk through all instance variables and fetch value.
     def fetch_ivar_value(var)
       name = var.to_s.delete('@').to_sym
       value = instance_eval(var.to_s)
@@ -49,7 +48,6 @@ module Sinatra
       { name: name, value: value }
     end
 
-    # Ignore pre-existing Sinatra instance variables.
     def additional_var?(var)
       !EXCLUDED_VARS.include?(var)
     end

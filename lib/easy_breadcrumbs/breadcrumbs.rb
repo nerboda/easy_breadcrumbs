@@ -9,7 +9,7 @@ module EasyBreadcrumbs
   class Breadcrumbs
     include ActiveSupport::Inflector
 
-    TEMPLATE = 'breadcrumbs.eruby'.freeze
+    TEMPLATE = 'breadcrumbs.eruby'
 
     def initialize(configuration)
       @view_variables = configuration.view_variables
