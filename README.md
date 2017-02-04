@@ -63,13 +63,14 @@ Old Breadcrumb Format: Home > Contacts > Contact
 New Breadcrumb Format: Home > Contacts > Ada Lovelace
 ```
 
-At the moment this only works around a strict set of parameters:
-  * There is an instance variable for the current route that matches the directory name
-    * So for a route of "/contacts/10" there would need to be a `@contact` variable
-  * That object is a hash
-  * That hash contains one of the following keys: `:name`, `:title`, `:subject`
+It's able to detect the name with the following limitations:
+  * The resource is either a Hash or a Custom object
+  * The resource has a key (Hash) or accessor method (custom object) of one of the following 3 commonly used name attributes:
+    * :name
+    * :title
+    * :subject
 
-Otherwise it will use the previous default formatting. I'm currently working on making this much more flexible and also allowing for custom configuration.
+If this condition fails, it will default to the old format.
 
 **Easy Breadcrumbs is able to handle a variety of complex routes.**
 
@@ -131,18 +132,13 @@ Breadcrumb: Home > Categories > Category > Contacts > Contact > Edit Contact
 
 ## Road Map
 
-* Refactor and cleanup
-  * Change `Breadcrumb` class to `Breadcrumbs`. This class will be responsible for the logic of which type of format to use for each breadcrumb
-  * Create new `Breadcrumb` class. This class will be responsible for the implementation details of formatting each type of breadcrumb.
-  * Add version restrictions for dependencies in gemspec
-* Improve Auto Name Detection
-  * It should also be able to handle if the resources are custom objects and their attributes are accessed through instance methods like `Object#name`.
 * Allow for custom configuration of name attributes for resources
   * Should be able to do something like `set :easy_breadcrumbs, user: :name, post: :title`
 * More robust spec suite
   * Explore more edge cases for both unit and integration tests
   * Eliminate repetition in specs
   * Other development gems that would help with this?
+* Update gemspec with depencency version restrictions and bump gem version to 1.0
 
 ## Contributing
 
