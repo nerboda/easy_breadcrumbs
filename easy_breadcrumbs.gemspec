@@ -11,7 +11,7 @@ Gem::Specification.new do |spec|
 
   spec.summary       = %q{Automatically add bootstrap breadcrumbs to your Sinatra app.}
   spec.description   = %q{Provides an `easy_breadcrumbs` view helper for automatically generating bootstrap breadcrumbs for your Sinatra Application.}
-  spec.homepage      = ""
+  spec.homepage      = "https://github.com/nerboda/easy_breadcrumbs"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files -z`.split("\x0").reject do |f|
