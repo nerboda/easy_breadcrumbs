@@ -1,14 +1,14 @@
 <ol class="breadcrumb">
-  <% if @links.empty? %>
+  <% if @breadcrumbs.empty? %>
   <li class="breadcrumb-item active">Home</li>
   <% else %>
   <li class="breadcrumb-item"><a href="/">Home</a></li>
   <% end %>
-<% @links.each do |link| %>
-  <% if link.path == @links.last.path %>
-  <li class="breadcrumb-item active"><%= link.text %></li>
+<% @breadcrumbs.each do |breadcrumb| %>
+  <% if breadcrumb.path == @breadcrumbs.last.path %>
+  <li class="breadcrumb-item active"><%= breadcrumb.text %></li>
   <% else %>
-  <li class="breadcrumb-item"><a href="<%= link.path %>"><%= link.text %></a></li>
+  <li class="breadcrumb-item"><a href="<%= breadcrumb.path %>"><%= breadcrumb.text %></a></li>
   <% end %>
 <% end %>
 </ol>
