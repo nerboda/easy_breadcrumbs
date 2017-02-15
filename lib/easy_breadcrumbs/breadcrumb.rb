@@ -1,5 +1,5 @@
+require 'easy_breadcrumbs/detect_name'
 require 'active_support/inflector/methods'
-require_relative 'auto_detect'
 
 module EasyBreadcrumbs
   # Breadcrumb class properly formats it's data depending on:
@@ -8,7 +8,7 @@ module EasyBreadcrumbs
   # => Whether it's a path to a `new` or `edit` view
   class Breadcrumb
     include ActiveSupport::Inflector
-    include AutoDetect
+    include EasyBreadcrumbs::DetectName
 
     attr_reader :path, :text
 

@@ -1,8 +1,7 @@
-require 'erubis'
+require 'easy_breadcrumbs/breadcrumb'
+require 'easy_breadcrumbs/directory'
 require 'active_support/inflector/methods'
-
-require_relative 'breadcrumb'
-require_relative 'directory'
+require 'erubis'
 
 module EasyBreadcrumbs
   # Breadcrumbs class: Converts a URL path into Bootstrap breadcrumbs.

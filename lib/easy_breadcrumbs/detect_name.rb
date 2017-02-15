@@ -1,5 +1,5 @@
 module EasyBreadcrumbs
-  module AutoDetect
+  module DetectName
     COMMON_NAME_ATTRIBUTES = %i[name title subject]
 
     def detect_name(resource)
