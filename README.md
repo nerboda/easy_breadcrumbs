@@ -132,6 +132,8 @@ Breadcrumb: Home > Categories > Category > Contacts > Contact > Edit Contact
 
 ## Road Map
 
+* Don't render breadcrumbs if current page is home
+* Allow for manual turning off of breadcrumbs for specific routes or sets of routes
 * Allow for custom configuration of name attributes for resources
   * Should be able to do something like `set :easy_breadcrumbs, user: :name, post: :title`
 * More robust spec suite
