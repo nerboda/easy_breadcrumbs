@@ -281,6 +281,30 @@ describe EasyBreadcrumbs do
         expect(breadcrumb_html).to eq(expected_html)
       end
 
+      it "doesn't prefix anchor for top level /new directory with 'New'" do
+        config = configure(path: "/new")
+        breadcrumb_html = Breadcrumbs.new(config).to_html
+        expected_html = <<~HTML.chomp
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/">Home</a></li>
+            <li class="breadcrumb-item active">New</li>
+          </ol>
+        HTML
+        expect(breadcrumb_html).to eq(expected_html)
+      end
+
+      it "doesn't prefix anchor for top level /edit directory with 'Edit'" do
+        config = configure(path: "/edit")
+        breadcrumb_html = Breadcrumbs.new(config).to_html
+        expected_html = <<~HTML.chomp
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/">Home</a></li>
+            <li class="breadcrumb-item active">Edit</li>
+          </ol>
+        HTML
+        expect(breadcrumb_html).to eq(expected_html)
+      end
+
       def configure(options)
         path = options.fetch(:path, "/")
         routes = options.fetch(:routes, default_routes)
@@ -307,6 +331,8 @@ describe EasyBreadcrumbs do
 
       def default_routes
         [/\A\/\z/,
+         /\A\/new\z/,
+         /\A\/edit\z/,
          /\A\/contacts\/new\z/,
          /\A\/contacts\/([^\/?#]+)\z/,
          /\A\/contacts\/([^\/?#]+)\/edit\z/,

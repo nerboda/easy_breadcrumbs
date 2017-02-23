@@ -10,24 +10,24 @@ module EasyBreadcrumbs
       @index = data.fetch(:index)
     end
 
-    def root_path?
-      index.zero?
-    end
-
     def ends_in_digit?
       name =~ %r{\d+\/?$}
     end
 
+    def new_or_edit_view?
+      new_view? || edit_view?
+    end
+
     def new_view?
-      name == 'new'
+      name == 'new' && nested?
     end
 
     def edit_view?
-      name == 'edit'
+      name == 'edit' && nested?
     end
 
-    def new_or_edit_view?
-      new_view? || edit_view?
+    def nested?
+      index > 0
     end
   end
 end
